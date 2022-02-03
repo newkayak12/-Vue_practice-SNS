@@ -26,13 +26,19 @@ export default {
   list-style: none;
   display: flex;
   flex-direction: column;
+  padding: 0.3rem;
 }
 .header-container  li {
   margin-bottom: 3rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
   font-size: 1.5rem;
+  color: rgb(101, 166, 106);
+  text-shadow: 0.01rem 0.01rem black;
 }
 .header-container  li span{
   padding: 0.5rem;
+
 }
 
 </style>

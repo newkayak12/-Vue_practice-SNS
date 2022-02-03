@@ -5,7 +5,6 @@
       <header-layout />
       <right-side />
     </div>
-
   </div>
 </template>
 <script>

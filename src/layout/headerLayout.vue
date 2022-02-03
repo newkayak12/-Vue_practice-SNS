@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="content">
-      asd
+      <router-view />
     </div>
   </div>
 </template>
@@ -42,5 +42,9 @@ export default {
     justify-content: flex-start;
     align-items: center;
   }
+  .content{
+    padding: 0rem;
+  }
+
 
 </style>

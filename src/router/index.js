@@ -1,9 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import main from '@/pages/main/index'
+import post from '@/pages/post/index'
+import like from '@/pages/like/index'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path:'/',
+    component:main,
+    redirect:'/post/',
+    children:[
+      {path:'/post/', component:post},
+      {path:'/like/', component: like}
+    ]
+  }
 ]
 
 const router = new VueRouter({
