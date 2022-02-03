@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="header-container">
       <div class="name">
         <div class="xi-arrow-left arrow"></div>
@@ -9,21 +9,27 @@
         </div>
       </div>
     </div>
-    <div class="content">
-      <router-view />
-    </div>
+<!--    <div class="content">-->
+<!--      <router-view />-->
+<!--    </div>-->
   </div>
 </template>
 
 <script>
 export default {
-  name: "headerLayout"
+  name: "headerLayout",
 }
 </script>
 
 <style scoped>
+  .container{
+    position: fixed;
+    top:0;
+    left:10vw;
+    z-index: 30;
+  }
   .header-container {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255,255,255,0.8);
     z-index: 20;
     width: 70vw;
     height: 4rem;

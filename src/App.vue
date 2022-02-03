@@ -5,6 +5,9 @@
       <header-layout />
       <right-side />
     </div>
+      <div class="content">
+        <router-view />
+      </div>
   </div>
 </template>
 <script>
@@ -21,10 +24,12 @@ export default {
 </script>
 <style>
 .header{
-  display: flex;
+  position: relative;
 }
-.leftSide{
-  width: 20vw;
+.content{
+  position: relative;
+  left: 10vw;
+  width: 70vw;
   height: 100vh;
 }
 </style>

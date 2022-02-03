@@ -95,6 +95,9 @@ export default {
 </script>
 
 <style scoped>
+  .outer-container{
+    width: 100%;
+  }
   .outer-container ul{
     list-style: none;
   }
@@ -106,7 +109,7 @@ export default {
   }
   .profile{
     position: absolute;
-    top: 75%;
+    top: 80%;
     left: 3rem;
     width: 90%;
     display: flex;

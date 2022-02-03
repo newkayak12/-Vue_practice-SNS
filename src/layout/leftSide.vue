@@ -1,11 +1,13 @@
 <template>
-<div class="header-container">
-  <ul>
-    <li> <img :src="require('@/assets/logo.png')" style="width: 5rem"></li>
-    <li class="xi-tag">&nbsp;찾기</li>
-    <li class="xi-cog">&nbsp;설정</li>
-  </ul>
-</div>
+  <div class="container">
+    <div class="header-container">
+      <ul>
+        <li> <img :src="require('@/assets/logo.png')" style="width: 5rem"></li>
+        <li class="xi-tag">&nbsp;찾기</li>
+        <li class="xi-cog">&nbsp;설정</li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -15,6 +17,11 @@ export default {
 </script>
 
 <style scoped>
+.container{
+  position: fixed;
+  top:0;
+  left:0;
+}
 .header-container{
   width: 10vw;
   height: 100vh;

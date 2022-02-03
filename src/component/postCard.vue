@@ -1,6 +1,6 @@
 <template>
   <div class="post-line">
-    <div class="post-outer">
+    <div class="post-outer" v-for="(item,index) in 3" :key="index">
       <div class="info">info</div>
       <div class="content">content</div>
       <div class="buttons">
@@ -16,24 +16,6 @@
           <span class="xi-share"></span>
           retweet
         </p>
-      </div>
-    </div>
-    <div class="post-outer">
-      <div class="info">info</div>
-      <div class="content">content</div>
-      <div class="buttons">buttons</div>
-    </div>
-    <div class="post-outer">
-      <div class="info">info</div>
-      <div class="content">content</div>
-      <div class="buttons">buttons</div>
-    </div>
-    <div class="post-outer">
-      <div class="info">info</div>
-      <div class="content">content</div>
-      <div class="buttons">
-        <span class="xi-heart"></span>
-        <span class="xi-heart-o"></span>
       </div>
     </div>
   </div>
@@ -61,7 +43,7 @@ export default {
     border-radius: 30px;
     width: 90%;
     height: 20rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -76,6 +58,8 @@ export default {
   .content{
     height: 60%;
     padding: 0.3rem;
+    left: 0;
+    width: 100%;
     border-bottom: rgb(187, 186, 186) 1px solid;
   }
   .buttons{

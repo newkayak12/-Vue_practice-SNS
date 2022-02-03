@@ -73,10 +73,14 @@ export default {
 <style scoped>
 .liner{
   border: 1px #eff3f4 solid;
+  position: fixed;
+  top: 0;
+  left:80vw;
+  height: 100vh;
 }
 .header-container{
   width: 20vw;
-  z-index: 20;
+  z-index: 40;
   height: 4rem;
   border: 1px #eff3f4 solid;
   display: flex;
