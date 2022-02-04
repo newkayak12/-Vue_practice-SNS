@@ -11,7 +11,7 @@ const routes = [
     component:main,
     redirect:'/post/',
     children:[
-      {path:'/post/', component:post},
+      {path:'/post/', component: post},
       {path:'/like/', component: like}
     ]
   }
