@@ -14,6 +14,7 @@
             <p class="id">{{mainData.userId}}</p>
         </div>
         <div class="info-date-container">
+          <span class="xi-ellipsis-h"></span>
           <p>{{mainData.regDate |moment('YYYY년 MM월 DD일')}}</p>
         </div>
       </div>
@@ -25,12 +26,12 @@
         <div class="photo-content">
           <img :src="item.path" alt="" v-for="(item,index) in mainData.img" :key="index">
         </div>
-        <div class="link-content">
-          {{mainData.link}}
+        <div class="link-content" v-if="mainData.link!==null">
+          <vuelinkpreview :url="mainData.link" @click="handleClick"/>
         </div>
       </div>
       <div class="buttons">
-        <p v-if="true">
+        <p v-if="amILiked(mainData.likeList)">
           <span class="xi-heart"></span>
           unlike
         </p>
@@ -48,8 +49,12 @@
 </template>
 
 <script>
+import Vuelinkpreview from '@ashwamegh/vue-link-preview'
 export default {
   name: "postCard",
+  components:{
+    Vuelinkpreview
+  },
   filters:{
     hashtag(val){
       return '#'+val
@@ -61,6 +66,18 @@ export default {
       required:true,
     }
   },
+  computed:{
+  },
+  methods: {
+    handleClick(preview) {
+      // console.log('click', preview.domain, preview.title, preview.description, preview.img)
+    },
+    amILiked(likeList){
+      const userData = JSON.parse(localStorage.getItem("userData"))
+      console.log( likeList.includes(parseInt(userData.userNo)))
+      return likeList.includes(parseInt(userData.userNo))? true:false
+    }
+  }
 }
 </script>
 
@@ -130,6 +147,15 @@ export default {
     margin-right: 1rem;
     font-size: 0.9rem;
     color: rgb(187, 186, 186);
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+  .info-date-container span{
+    margin-bottom: 1rem;
+  }
+  .info-date-container span:active{
+    color:rgb(106, 171, 111);
   }
   .content{
     padding: 0.3rem;
@@ -150,6 +176,9 @@ export default {
   }
   .photo-content{
     margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 9rem);
+    gap: 1rem ;
   }
   .photo-content img {
     margin: 0.4rem;
@@ -158,6 +187,10 @@ export default {
   }
   .link-content{
     margin: 1rem;
+    padding: 0;
+  }
+  .link-content div{
+    width: 100%;
   }
   .buttons{
     height: 2.5rem;
@@ -169,6 +202,15 @@ export default {
     margin-left: 1rem;
   }
   .buttons p span{
+    color:rgb(106, 171, 111)
+  }
+  .buttons .xi-heart-o{
+    color: rgb(187, 186, 186);
+  }
+  .buttons .xi-share{
+    color: rgb(187, 186, 186);
+  }
+  .buttons .xi-share:active{
     color:rgb(106, 171, 111)
   }
 </style>

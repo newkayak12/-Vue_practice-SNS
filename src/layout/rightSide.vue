@@ -40,6 +40,7 @@ export default {
     return {
       userData:'',
       form:{
+        userNo:1,
         id:'',
         img:'https://w.namu.la/s/9d861e060e3dba0ab3d17acf5282b1ad11b4d494a57cedac0fa26154f93e7649a4cc22d4ef6dcfc8dee4c59469ed85d9ecbb2db057921750e6583f238541fa81fce4730a467a3ce2faf4383499fb0df20112d74e3d914e46aa32e98ab68853bb',
         password:'',

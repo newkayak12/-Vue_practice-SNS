@@ -3,10 +3,10 @@
     <div>
     <ul class="top-container">
       <li class="backgroundImg">
-        <img :src="fetchedData.backgroundImg" alt="">
+        <img :src="fetchedData.userData.backgroundImg" alt="">
       </li>
       <li class="profile">
-        <img :src="fetchedData.profileImg" alt="">
+        <img :src="fetchedData.userData.profileImg" alt="">
         <button> Follow </button>
       </li>
     </ul>
@@ -68,8 +68,10 @@ export default {
   data(){
     return {
       fetchedData:{
-        backgroundImg : require('@/assets/img/600x200.jpeg'),
-        profileImg: require("@/assets/img/400x400.jpg")
+        userData:{
+          backgroundImg : require('@/assets/img/600x200.jpeg'),
+          profileImg: require("@/assets/img/400x400.jpg")
+        }
       }
     }
   },
