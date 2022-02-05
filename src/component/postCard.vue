@@ -14,8 +14,12 @@
             <p class="id">{{mainData.userId}}</p>
         </div>
         <div class="info-date-container">
-          <span class="xi-ellipsis-h"></span>
+          <span class="xi-ellipsis-h" @click="fnShowTooltip"></span>
           <p>{{mainData.regDate |moment('YYYY년 MM월 DD일')}}</p>
+        </div>
+        <div class="tooltip" v-if="meta.tooltip">
+          <button class="delete">삭제</button>
+          <button class="modify">수정</button>
         </div>
       </div>
       <div class="content">
@@ -32,11 +36,11 @@
       </div>
       <div class="buttons">
         <p v-if="amILiked(mainData.likeList)">
-          <span class="xi-heart"></span>
+          <span class="xi-heart" @click="fnUnLike"></span>
           unlike
         </p>
         <p v-else>
-          <span class="xi-heart-o"></span>
+          <span class="xi-heart-o" @click="fnLike"></span>
           like
         </p>
         <p>
@@ -60,7 +64,15 @@ export default {
       return '#'+val
     }
   },
+  data(){
+    return {
+      meta:{
+        tooltip:false
+      },
+    }
+  },
   props:{
+
     mainData:{
       type:Object,
       required:true,
@@ -76,7 +88,18 @@ export default {
       const userData = JSON.parse(localStorage.getItem("userData"))
       console.log( likeList.includes(parseInt(userData.userNo)))
       return likeList.includes(parseInt(userData.userNo))? true:false
+    },
+    fnUnLike(){
+      const postNo =  this.mainData.postNo
+    },
+    fnLike(){
+      const postNo =  this.mainData.postNo
+    },
+    fnShowTooltip(){
+      this.meta.tooltip= !this.meta.tooltip
     }
+
+
   }
 }
 </script>
@@ -156,6 +179,31 @@ export default {
   }
   .info-date-container span:active{
     color:rgb(106, 171, 111);
+  }
+  .tooltip{
+    position: absolute;
+    right: 0;
+    border: 1px solid rgb(187, 186, 186);
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem;
+    width: 6rem;
+    height: 3rem;
+  }
+  .tooltip .delete {
+    background-color: #ec8d8d;
+    color:white;
+    padding: 0.2rem 0.3rem;
+    border: 1px solid rgb(187, 186, 186);
+  }
+  .tooltip .modify{
+    background-color:rgb(106, 171, 111);
+    color:white;
+    padding: 0.2rem 0.3rem;
+    border: 1px solid rgb(187, 186, 186);
   }
   .content{
     padding: 0.3rem;

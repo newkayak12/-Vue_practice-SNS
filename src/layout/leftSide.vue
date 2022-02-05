@@ -3,8 +3,14 @@
     <div class="header-container">
       <ul>
         <li> <img :src="require('@/assets/logo.png')" style="width: 5rem"></li>
-        <li class="xi-tag">&nbsp;찾기</li>
-        <li class="xi-cog">&nbsp;설정</li>
+        <li class="mark">&nbsp;
+         <span class="xi-tag"></span>
+         <span class="tag-label">찾기</span>
+        </li>
+        <li class="mark">&nbsp;
+         <span class="xi-cog"></span>
+         <span class="setting-label">설정</span>
+        </li>
       </ul>
     </div>
   </div>
@@ -12,7 +18,7 @@
 
 <script>
 export default {
-  name: "leftSid"
+  name: "leftSide"
 }
 </script>
 
@@ -45,7 +51,22 @@ export default {
 }
 .header-container  li span{
   padding: 0.5rem;
-
 }
+
+.mark{
+  margin: 0rem 0.2rem;
+  padding: 0rem 0.2rem;
+}
+@media(max-width: 1300px ){
+  .tag-label, .setting-label {
+      display: none;
+  }
+}
+@media(min-width: 1301px ){
+  .tag-label, .setting-label {
+    display: inline-block;
+  }
+}
+
 
 </style>
