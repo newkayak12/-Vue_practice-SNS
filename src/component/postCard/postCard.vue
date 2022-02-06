@@ -85,7 +85,8 @@ export default {
       // console.log('click', preview.domain, preview.title, preview.description, preview.img)
     },
     amILiked(likeList){
-      const userData = JSON.parse(localStorage.getItem("userData"))
+      const meta = localStorage.getItem("userData")|''
+      const userData = JSON.parse(meta)
       console.log( likeList.includes(parseInt(userData.userNo)))
       return likeList.includes(parseInt(userData.userNo))? true:false
     },
