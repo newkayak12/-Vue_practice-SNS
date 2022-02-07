@@ -135,7 +135,7 @@ export default {
     border-radius: 30px;
     background-color: rgb(106, 171, 111);
     color: white;
-    border: rgb(240,240,240);
+    border: 1px solid rgb(240,240,240);
     position: absolute;
     bottom: 2rem;
     right: 0;

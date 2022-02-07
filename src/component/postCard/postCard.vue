@@ -18,8 +18,13 @@
           <p>{{mainData.regDate |moment('YYYY년 MM월 DD일')}}</p>
         </div>
         <div class="tooltip" v-if="meta.tooltip">
-          <button class="delete">삭제</button>
-          <button class="modify">수정</button>
+          <div class="tooltip-header">
+            <div @click="fnCloseTooltip">X</div>
+          </div>
+          <div class="tooltip-content">
+            <button class="delete" @click="fnDelete">삭제</button>
+            <button class="modify" @click="fnModify">수정</button>
+          </div>
         </div>
       </div>
       <div class="content">
@@ -98,9 +103,16 @@ export default {
     },
     fnShowTooltip(){
       this.meta.tooltip= !this.meta.tooltip
+    },
+    fnCloseTooltip(){
+      this.meta.tooltip= !this.meta.tooltip
+    },
+    fnDelete(){
+      this.$emit('fnDelete', this.mainData.postNo)
+    },
+    fnModify() {
+      this.$emit('fnModify', this.mainData.postNo)
     }
-
-
   }
 }
 </script>
@@ -183,6 +195,7 @@ export default {
   }
   .tooltip{
     position: absolute;
+    top:0;
     right: 0;
     border: 1px solid rgb(187, 186, 186);
     border-radius: 10px;
@@ -190,9 +203,23 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
     padding: 0.3rem;
-    width: 6rem;
-    height: 3rem;
+    width: 7rem;
+    height: 4rem;
+  }
+  .tooltip-header{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 0.3rem;
+    cursor: pointer;
+  }
+  .tooltip-content{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .tooltip .delete {
     background-color: #ec8d8d;

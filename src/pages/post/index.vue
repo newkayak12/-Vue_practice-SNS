@@ -4,18 +4,26 @@
       <div class="buttonLayer" >
         <span v-if="meta.areYouWrite" @click="fnWrite" class="writeLayer">
           <span class="xi-pen"></span>
-          등록하기
+          글쓰기
         </span>
-        <span v-else @click="fnUndo" class="undoLayer">
-          <span class="xi-undo"></span>
-          취소하기
+        <span v-else  class="undoLayer">
+          <span @click="fnUndo" class="undoLayer-firstSkin">
+              <span class="xi-undo"></span>
+              취소하기
+          </span>
+          <span @click="fnEnroll" class="undoLayer-firstSkin">
+              <span class="xi-border-color"></span>
+              등록하기
+          </span>
         </span>
-      </div>
 
-      <PostEditor />
+      </div>
+      <post-editor v-if="!meta.areYouWrite" :content.sync="form.content"
+                   :link.sync="form.link" :hashtag.sync="form.hashtag"/>
     </div>
     <div v-if="fetchedData.posts.length>0" class="post-container">
-      <post-card :main-data="item" v-for="(item, index) in fetchedData.posts" :key="index"/>
+      <post-card :main-data="item" v-for="(item, index) in fetchedData.posts"
+                 :key="index" v-on:fnModify="fnModify" v-on:fnDelete="fnDelete"/>
     </div>
     <div v-else class="no-post-container">
       <span class="xi-info-o"> 포스트가 없습니다.</span>
@@ -36,6 +44,13 @@ export default {
         this.fetchData()
       }
     },800))
+    const userData = JSON.parse(localStorage.getItem("userData")||{})
+    if(Object.values(userData).length > 0){
+      this.form.userNo = userData.userNo
+      this.form.userId = userData.id
+      this.form.userName = userData.name
+      this.form.profileImg = userData.img
+    }
   },
   components:{
     postCard, postEditor
@@ -43,8 +58,20 @@ export default {
   data(){
     return {
       meta:{
-        hasMorePost:false,
+        hasMorePost:true,
         areYouWrite:true
+      },
+      form:{
+        userNo:1,
+        userId:'',
+        profileImg:'',
+        userName:'',
+        content:'',
+        regDate: new Date(),
+        link:'',
+        hashtag:[],
+        isMain:false,
+        likeList:[]
       },
       fetchedData:{
         posts:[]
@@ -92,7 +119,7 @@ export default {
             isMain:false,
             content:'<p>hello</p>',
             hashtag:['아이유', 'IU', '조각집', 'Pieces', 'PiecesByIU', '스물아홉_아이유가_모은_조각집'],
-            link: 'https://www.melon.com/album/detail.htm?albumId=10827816',
+            link: 'https://www.naver.com',
             img:[
               {path:'https://twitter.com/edam_ent/status/1486987564406177792/photo/1'},
               {path:'https://twitter.com/flytorifly/status/1486988551065841664/photo/1'}
@@ -102,6 +129,8 @@ export default {
         ]
       }
     }
+  },
+  computed:{
   },
   methods:{
     fetchData(){
@@ -119,7 +148,23 @@ export default {
     },
     fnUndo(){
       this.meta.areYouWrite = !this.meta.areYouWrite
+    },
+    fnEnroll(){
+      this.meta.areYouWrite = !this.meta.areYouWrite
+      console.log(this.form)
+      this.fetchedData.posts.unshift(JSON.parse(JSON.stringify(this.form)))
+      this.form.content=''
+      this.form.link=''
+      this.form.hashtag=''
+    },
+    fnModify(postNo){
+      console.log(postNo)
+    },
+    fnDelete(postNo){
+      console.log(postNo)
     }
+
+
   }
 }
 </script>
@@ -147,6 +192,16 @@ export default {
 }
 .undoLayer{
   cursor:pointer;
+}
+.undoLayer-firstSkin{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.xi-undo{
+  color: rgb(171, 106, 168)
+}
+.xi-border-color{
+  color:rgb(106, 171, 111)
 }
 .no-post-container{
   display: flex;
