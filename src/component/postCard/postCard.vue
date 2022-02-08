@@ -48,12 +48,12 @@
 
       </div>
       <div class="buttons">
-        <p v-if="amILiked(mainData.likeList)">
-          <span class="xi-heart" @click="fnUnLike"></span>
+        <p v-if="amILiked(mainData.likeList)" @click="fnUnLike">
+          <span class="xi-heart" ></span>
           unlike
         </p>
-        <p v-else>
-          <span class="xi-heart-o" @click="fnLike"></span>
+        <p v-else  @click="fnLike">
+          <span class="xi-heart-o"></span>
           like
         </p>
         <p>
@@ -109,16 +109,19 @@ export default {
       // console.log('click', preview.domain, preview.title, preview.description, preview.img)
     },
     amILiked(likeList){
-      const meta = localStorage.getItem("userData")|''
+      const meta = localStorage.getItem("userData")||''
       const userData = JSON.parse(meta)
-      console.log( likeList.includes(parseInt(userData.userNo)))
+      console.log( 'amIliked',likeList.includes(parseInt(userData.userNo)))
+      console.log(likeList, userData.userNo)
       return likeList.includes(parseInt(userData.userNo))? true:false
     },
     fnUnLike(){
       const postNo =  this.mainData.postNo
+      this.$emit('fnUnLike', {postNo:postNo, userNo:JSON.parse(localStorage.getItem("userData")).userNo})
     },
     fnLike(){
       const postNo =  this.mainData.postNo
+      this.$emit('fnLike', {postNo:postNo, userNo:JSON.parse(localStorage.getItem("userData")).userNo})
     },
     fnShowTooltip(){
       this.meta.tooltip= !this.meta.tooltip

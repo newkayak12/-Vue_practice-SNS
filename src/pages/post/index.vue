@@ -31,7 +31,9 @@
     <div v-if="fetchedData.posts.length>0" class="post-container">
       <post-card :main-data="item" v-for="(item, index) in fetchedData.posts"
                  :idx="index" @fnChange="fnModifyContent"
-                 :key="index" @fnModify="fnModify" @fnDelete="fnDelete"/>
+                 :key="index" @fnModify="fnModify" @fnDelete="fnDelete"
+                 @fnLike="fnLike" @fnUnLike="fnUnLike"
+      />
     </div>
     <div v-else class="no-post-container">
       <span class="xi-info-o"> 포스트가 없습니다.</span>
@@ -100,7 +102,7 @@ export default {
               {path:'https://twitter.com/edam_ent/status/1486987564406177792/photo/1'},
               {path:'https://twitter.com/flytorifly/status/1486988551065841664/photo/1'}
             ],
-            likeList:[]
+            likeList:[1]
           },
           {
             postNo:2,
@@ -132,7 +134,7 @@ export default {
               {path:'https://twitter.com/edam_ent/status/1486987564406177792/photo/1'},
               {path:'https://twitter.com/flytorifly/status/1486988551065841664/photo/1'}
             ],
-            likeList:[]
+            likeList:[1]
           }
         ]
       }
@@ -191,6 +193,30 @@ export default {
       this.$set(this.fetchedData.posts[val.index], 'content' , val.content )
       this.$set(this.fetchedData.posts[val.index], 'link' , val.link )
       this.$set(this.fetchedData.posts[val.index], 'hashtag' , val.hashtag )
+    },
+    fnLike(val){
+      console.log(val)
+      const idx = this.fetchedData.posts.findIndex((v)=>{
+        console.log(v)
+        if(v.postNo===val.postNo){
+          return v
+        }
+      })
+      console.log(this.fetchedData.posts[idx])
+      this.fetchedData.posts[idx].likeList.push(val.userNo)
+    },
+    fnUnLike(val) {
+      const idx = this.fetchedData.posts.findIndex((v)=>{
+        if(v.postNo===val.postNo){
+          return v
+        }
+      })
+      const userNoIdx= this.fetchedData.posts[idx].likeList.findIndex((v)=>{
+        if(v===val.userNo){
+          return v
+        }
+      })
+      this.fetchedData.posts[idx].likeList.splice(userNoIdx,1)
     }
   }
 }
