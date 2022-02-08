@@ -18,12 +18,20 @@
         </span>
 
       </div>
-      <post-editor v-if="!meta.areYouWrite" :content.sync="form.content"
-                   :link.sync="form.link" :hashtag.sync="form.hashtag"/>
+      <post-editor v-if="!meta.areYouWrite"
+                   :content="form.content"
+                   :link="form.link"
+                   :hashtag="form.hashtag"
+                   @fnChange="fnChange"
+                   @fnLink="fnLink"
+                   @fnHashtag="fnHashtag"
+
+      />
     </div>
     <div v-if="fetchedData.posts.length>0" class="post-container">
       <post-card :main-data="item" v-for="(item, index) in fetchedData.posts"
-                 :key="index" v-on:fnModify="fnModify" v-on:fnDelete="fnDelete"/>
+                 :idx="index" @fnChange="fnModifyContent"
+                 :key="index" @fnModify="fnModify" @fnDelete="fnDelete"/>
     </div>
     <div v-else class="no-post-container">
       <span class="xi-info-o"> 포스트가 없습니다.</span>
@@ -85,7 +93,7 @@ export default {
             userName:"아이유(IU) Official Twitter",
             regDate: new Date(),
             isMain:true,
-            content:'<p>hello</p>',
+            content:'<p>안녕</p>',
             hashtag:['아이유', 'IU', '조각집', 'Pieces', 'PiecesByIU', '스물아홉_아이유가_모은_조각집'],
             link: 'https://www.melon.com/album/detail.htm?albumId=10827816',
             img:[
@@ -101,7 +109,7 @@ export default {
             userName:"아이유(IU) Official Twitter",
             regDate: new Date(),
             isMain:false,
-            content:'<p>hello</p>',
+            content:'<p>hi</p>',
             hashtag:['아이유', 'IU', '조각집', 'Pieces', 'PiecesByIU', '스물아홉_아이유가_모은_조각집'],
             link: 'https://www.melon.com/album/detail.htm?albumId=10843381',
             img:[
@@ -132,39 +140,58 @@ export default {
   },
   computed:{
   },
-  methods:{
-    fetchData(){
-      if(!this.meta.hasMorePost){
+  methods: {
+    fnChange(val) {
+      this.$set(this.form, 'content', val)
+    },
+    fnLink(val){
+      this.$set(this.form, 'link', val)
+    },
+    fnHashtag(val){
+      this.$set(this.form, 'hashtag', val)
+    },
+    fetchData() {
+      if (!this.meta.hasMorePost) {
         return
       }
-
-      this.beforeFetch.posts.forEach((v,i)=>{
+      this.beforeFetch.posts.forEach((v, i) => {
         this.fetchedData.posts.push(v)
       })
-      console.log(this.fetchedData.posts)
     },
-    fnWrite(){
+    fnWrite() {
       this.meta.areYouWrite = !this.meta.areYouWrite
     },
-    fnUndo(){
+    fnUndo() {
       this.meta.areYouWrite = !this.meta.areYouWrite
     },
-    fnEnroll(){
+    fnEnroll() {
       this.meta.areYouWrite = !this.meta.areYouWrite
-      console.log(this.form)
+      this.form.postNo = Math.ceil(Math.random()*10000+1)
+      console.log(this.form.postId)
       this.fetchedData.posts.unshift(JSON.parse(JSON.stringify(this.form)))
-      this.form.content=''
-      this.form.link=''
-      this.form.hashtag=''
+
+      this.form.content = ''
+      this.form.link = ''
+      this.form.hashtag = ''
     },
-    fnModify(postNo){
+    fnModify(postNo) {
       console.log(postNo)
     },
-    fnDelete(postNo){
-      console.log(postNo)
+    fnDelete(postNo) {
+      const idx = this.fetchedData.posts.findIndex((v,i)=>{
+        console.log(v)
+        if(v.postNo===postNo){
+          return v
+        }
+      })
+      console.log(idx)
+      this.fetchedData.posts.splice(idx,1)
+    },
+    fnModifyContent(val={}){
+      this.$set(this.fetchedData.posts[val.index], 'content' , val.content )
+      this.$set(this.fetchedData.posts[val.index], 'link' , val.link )
+      this.$set(this.fetchedData.posts[val.index], 'hashtag' , val.hashtag )
     }
-
-
   }
 }
 </script>

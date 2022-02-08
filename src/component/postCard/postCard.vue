@@ -1,6 +1,6 @@
 <template>
   <div class="post-line">
-    <div class="post-outer">
+    <div class="post-outer" @click.stop.prevent="fnCloseTooltip">
       <div class="main-post" v-if="mainData.isMain">
         <span class="xi-bookmark"></span>
         메인 트윗
@@ -14,23 +14,21 @@
             <p class="id">{{mainData.userId}}</p>
         </div>
         <div class="info-date-container">
-          <span class="xi-ellipsis-h" @click="fnShowTooltip"></span>
+          <span class="xi-ellipsis-h" @click.prevent.stop="fnShowTooltip"></span>
           <p>{{mainData.regDate |moment('YYYY년 MM월 DD일')}}</p>
         </div>
         <div class="tooltip" v-if="meta.tooltip">
-          <div class="tooltip-header">
-            <div @click="fnCloseTooltip">X</div>
-          </div>
-          <div class="tooltip-content">
-            <button class="delete" @click="fnDelete">삭제</button>
-            <button class="modify" @click="fnModify">수정</button>
-          </div>
+            <button class="delete" @click.stop.prevent="fnDelete">삭제</button>
+            <button class="modify" @click.stop.prevent="fnModify">수정</button>
         </div>
       </div>
-      <div class="content">
+      <div class="content" v-if="!meta.isModify">
         <div class="main-content" v-html="mainData.content"></div>
         <div class="hash-content">
-          <a href="#" v-for="(item,index) in mainData.hashtag" :key="index">{{item|hashtag}}</a>
+          <a href="#" v-for="(item,index) in mainData.hashtag" :key="index">
+            {{item|hashtag}}
+          </a>
+          <br v-if="index/2">
         </div>
         <div class="photo-content">
           <img :src="item.path" alt="" v-for="(item,index) in mainData.img" :key="index">
@@ -38,6 +36,16 @@
         <div class="link-content" v-if="mainData.link!==null">
           <vuelinkpreview :url="mainData.link" @click="handleClick"/>
         </div>
+      </div>
+      <div v-else>
+        <button @click="fnModifyChange">수정</button>
+        <post-editor :content="mainData.content" :link="mainData.link"
+                     :hashtag="hash"
+                     @fnChange="fnChange"
+                     @fnLink="fnLink"
+                     @fnHashtag="fnHashtag"
+        />
+
       </div>
       <div class="buttons">
         <p v-if="amILiked(mainData.likeList)">
@@ -59,10 +67,11 @@
 
 <script>
 import Vuelinkpreview from '@ashwamegh/vue-link-preview'
+import postEditor from "@/component/postEditor/postEditor";
 export default {
   name: "postCard",
   components:{
-    Vuelinkpreview
+    Vuelinkpreview, postEditor
   },
   filters:{
     hashtag(val){
@@ -72,18 +81,28 @@ export default {
   data(){
     return {
       meta:{
-        tooltip:false
+        tooltip:false,
+        isModify:false,
+        content:'',
+        link:'',
+        hashtag:'',
       },
     }
   },
   props:{
-
     mainData:{
       type:Object,
       required:true,
+    },
+    idx:{
+      type:Number
     }
   },
   computed:{
+    hash(){
+      console.log(this.mainData)
+       return this.mainData.hashtag===null? '':'#'+this.mainData.hashtag.join('#')
+    }
   },
   methods: {
     handleClick(preview) {
@@ -105,13 +124,37 @@ export default {
       this.meta.tooltip= !this.meta.tooltip
     },
     fnCloseTooltip(){
-      this.meta.tooltip= !this.meta.tooltip
+      this.meta.tooltip= false
     },
     fnDelete(){
+      this.meta.tooltip= false
       this.$emit('fnDelete', this.mainData.postNo)
     },
     fnModify() {
+      this.meta.tooltip= false
+      this.meta.isModify=true
       this.$emit('fnModify', this.mainData.postNo)
+    },
+    fnChange(val) {
+      this.$set(this.meta, 'content', val)
+      console.log(val)
+    },
+    fnLink(val){
+      this.$set(this.meta, 'link', val)
+      console.log(val)
+    },
+    fnHashtag(val){
+      this.$set(this.meta, 'hashtag', val)
+      console.log(val)
+    },
+    fnModifyChange(){
+      const content = this.meta.content
+      const index= this.idx
+      const link = this.meta.link
+      const hashtag= this.meta.hashtag
+      this.meta.isModify=false
+      this.$emit('fnChange', {content:content, index:index, link:link, hashtag: hashtag})
+
     }
   }
 }
@@ -203,10 +246,10 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     padding: 0.3rem;
-    width: 7rem;
-    height: 4rem;
+    width: 5.5rem;
+    height: 3em;
   }
   .tooltip-header{
     width: 100%;
@@ -245,8 +288,10 @@ export default {
   }
   .hash-content{
     margin: 1rem;
+    /*width:10rem;*/
   }
   .hash-content a{
+    width: 2rem;
     font-size: 0.9rem;
     margin:0 0.2rem 0 0.2rem;
   }

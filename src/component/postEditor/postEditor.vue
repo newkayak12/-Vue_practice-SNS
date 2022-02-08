@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="editor-outline">
-      <quill-editor :options="editorOption" @change="fnChange" class="edit"/>
+      <quill-editor :options="editorOption" v-model="contents" @change="fnChange" class="edit"/>
       <div class="mini-editor">
         <span class="xi-tags icon"></span>
-        <input type="text" class="edit" @input="fnHashtag">
+        <input type="text" class="edit" v-model="hashtags" @input="fnHashtag">
       </div>
       <div class="mini-editor">
         <span class="xi-link icon"></span>
-        <input type="url" class="edit" @input="fnLink" >
+        <input type="url" class="edit" v-model="links" @input="fnLink">
       </div>
     </div>
   </div>
@@ -26,13 +26,27 @@ export default {
       type:String
     },
     hashtag:{
-      type:Array
+      type:[Array,String]
     }
   },
-  components:{
+  beforeMount(){
+    this.contents=this.content
+    this.hashtags = this.hashtag
+    this.links = this.link
+
+  },
+  mounted() {
+    this.fnChange({html:this.contents})
+    this.fnLink({target:{value:this.links}})
+    this.fnHashtag({target:{value:this.hashtags}})
+  },
+  watch:{
   },
   data(){
     return {
+      contents:'',
+      links:'',
+      hashtags:'',
       editorOption: {
         // some quill options
         modules: {
@@ -47,15 +61,20 @@ export default {
   methods:{
     fnChange(val){
       // this.content = val.html
-      this.$emit('update:content', val.html)
+      // this.$emit('update:content', val.html)
+      console.log('123',val)
+      this.$emit('fnChange', val.html)
     },
     fnHashtag(e){
       const value = e.target.value.replaceAll(' ','')
       const arr = value.split("#").splice(1)
-      this.$emit('update:hashtag', arr)
+      // this.$emit('update:hashtag', arr)
+      this.$emit('fnHashtag', arr)
     },
     fnLink(e){
-      this.$emit('update:link', e.target.value)
+      // this.$emit('update:link', e.target.value)
+      this.$emit('fnLink', e.target.value)
+
     }
   }
 }
