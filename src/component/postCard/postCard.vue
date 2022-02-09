@@ -321,6 +321,7 @@ export default {
     padding: 0.3rem 1rem;
     display: flex;
     justify-content: flex-end;
+    cursor:pointer;
   }
   .buttons p{
     margin-left: 1rem;
