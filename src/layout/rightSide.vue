@@ -26,6 +26,8 @@
       </div>
       <button @click="fnLogout"> 로그아웃 </button>
     </div>
+
+
   </div>
 </template>
 
