@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="post-container">
     <div class="postLayer">
       <div class="buttonLayer" >
@@ -38,10 +39,28 @@
     <div v-else class="no-post-container">
       <span class="xi-info-o"> 포스트가 없습니다.</span>
     </div>
+=======
+  <div style="width: 70vw">
+<!--
+  부모가 자식에게 데이터를 주는 방법은 props
+  반대는??
+  1. .sync > props.sync=""
+  2. $emit > 상위 메소드로 보내는 eventbus
+  3. vuex > 모든 데이터를 중앙에서 관리한다.
+
+-->
+    <div class="editor">
+      <editor
+          :parent-data.sync="parentContent"
+      ></editor>
+    </div>
+    <post-component v-for="(item,index) in list" :key="index" :userData="userData" :data="item"/>
+>>>>>>> e0403201c05a7dcbd4193ba37a04054df55ab4cd
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import postCard from "@/component/postCard/postCard";
 import postEditor from "@/component/postEditor/postEditor";
 import throttle from "lodash.throttle";
@@ -219,10 +238,59 @@ export default {
       this.fetchedData.posts[idx].likeList.splice(userNoIdx,1)
     }
   }
+=======
+import postComponent from "@/components/pages/post/postComponent";
+import editor from "@/components/editor/editor";
+export default {
+  name: "post-index",
+  components:{
+    postComponent,editor
+  },
+  beforeMount() {
+  },
+  data(){
+    return{
+      parentContent:'parent',
+      userData:localStorage.getItem("userData"),
+      list:[
+        {
+          postNo:1,
+          regDate:new Date(),
+          content:"DATA1"
+        },
+        {
+          postNo:1,
+          regDate:new Date(),
+          content:"DATA1"
+        },
+        {
+          postNo:1,
+          regDate:new Date(),
+          content:"DATA1"
+        },
+        {
+          postNo:1,
+          regDate:new Date(),
+          content:"DATA1"
+        }
+      ]
+    }
+  },
+  methods:{
+    testMethod(values){
+      alert(values)
+    }
+  }
+
+
+
+
+>>>>>>> e0403201c05a7dcbd4193ba37a04054df55ab4cd
 }
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 .post-container{
   display: flex;
   flex-direction: column;
@@ -262,4 +330,7 @@ export default {
   align-items: center;
   height: 15rem;
 }
+=======
+
+>>>>>>> e0403201c05a7dcbd4193ba37a04054df55ab4cd
 </style>

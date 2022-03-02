@@ -1,5 +1,6 @@
 <template>
   <div>
+<<<<<<< HEAD
     <div v-if="fetchedData.posts.length>0" class="post-container">
       <post-card :main-data="item" v-for="(item, index) in fetchedData.posts"
                  :idx="index" :key="index"
@@ -9,10 +10,15 @@
     <div v-else class="no-post-container">
       <span class="xi-info-o"> 포스트가 없습니다.</span>
     </div>
+=======
+    like
+    {{vuex}}
+>>>>>>> e0403201c05a7dcbd4193ba37a04054df55ab4cd
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import postCard from "@/component/postCard/postCard";
 export default {
   name: "index",
@@ -99,6 +105,13 @@ export default {
         }
       })
       this.fetchedData.posts[idx].likeList.splice(userNoIdx,1)
+=======
+export default {
+  name: "index",
+  computed:{
+    vuex(){
+      return this.$store.getters['getConent']
+>>>>>>> e0403201c05a7dcbd4193ba37a04054df55ab4cd
     }
   }
 }

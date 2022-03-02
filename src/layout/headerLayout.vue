@@ -9,9 +9,12 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
 <!--    <div class="content">-->
 <!--      <router-view />-->
 <!--    </div>-->
+=======
+>>>>>>> e0403201c05a7dcbd4193ba37a04054df55ab4cd
   </div>
 </template>
 
@@ -30,7 +33,10 @@ export default {
   }
   .header-container {
     background-color: rgba(255,255,255,0.8);
+<<<<<<< HEAD
     z-index: 20;
+=======
+>>>>>>> e0403201c05a7dcbd4193ba37a04054df55ab4cd
     width: 70vw;
     height: 4rem;
     border: 1px #eff3f4 solid;

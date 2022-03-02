@@ -8,6 +8,9 @@ import VueQuillEditor from 'vue-quill-editor'
 import signSvc from "@/service/SignSvc";
 
 
+// Vue.config.productionTip = false
+Vue.use(moment)
+
 Vue.prototype.$SignSvc = signSvc
 
 import 'quill/dist/quill.core.css'
