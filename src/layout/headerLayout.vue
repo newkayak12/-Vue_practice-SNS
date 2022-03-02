@@ -9,12 +9,9 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
 <!--    <div class="content">-->
 <!--      <router-view />-->
 <!--    </div>-->
-=======
->>>>>>> e0403201c05a7dcbd4193ba37a04054df55ab4cd
   </div>
 </template>
 
