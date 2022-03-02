@@ -11,6 +11,7 @@
         <input type="text" placeholder="아이디" v-model="form.id">
         <input type="password" placeholder="비밀번호" v-model="form.password">
         <button @click="fnLogin"> 로그인 </button>
+        <p @click="fnSignUp">회원가입</p>
       </div>
     </div>
     <div class="loggedin" v-else>
@@ -84,9 +85,10 @@ export default {
         return alert("아이디, 비밀번호를 확인해세요")
       }
       this.userData = response.userData
-
     },
     fnLogout(){
+    },
+    fnSignUp(){
     }
   }
 }
