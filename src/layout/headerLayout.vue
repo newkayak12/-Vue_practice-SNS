@@ -9,9 +9,6 @@
         </div>
       </div>
     </div>
-    <div class="content">
-      asd
-    </div>
   </div>
 </template>
 
@@ -23,8 +20,7 @@ export default {
 
 <style scoped>
   .header-container {
-    background-color: rgba(255,255,255,0.2);
-    z-index: 20;
+    background-color: rgba(255,255,255,0.8);
     width: 70vw;
     height: 4rem;
     border: 1px #eff3f4 solid;

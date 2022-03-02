@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div class="header">
-      <left-side />
-      <header-layout />
-      <right-side />
+      <left-side class="leftSide"/>
+      <header-layout class="center"/>
+      <router-view class="content"></router-view>
+      <right-side  class="rightSied"/>
     </div>
-
   </div>
 </template>
 <script>
@@ -20,12 +20,29 @@ export default {
 }
 
 </script>
-<style>
+<style scoped>
 .header{
   display: flex;
+  position: relative;
 }
 .leftSide{
-  width: 20vw;
+  width: 10vw;
   height: 100vh;
+  position: fixed;
+  left:0;
+}
+.center{
+  position: fixed;
+  z-index: 20;
+  left: 10vw
+}
+.rightSied{
+  position: fixed;
+  left:80vw
+}
+.content{
+  position: absolute;
+  left: 10vw;
+  top: 4rem;
 }
 </style>

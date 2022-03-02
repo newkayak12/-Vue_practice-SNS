@@ -33,6 +33,7 @@ export default {
 }
 .header-container  li span{
   padding: 0.5rem;
+  color: rgb(106, 171, 111);
 }
 
 </style>
